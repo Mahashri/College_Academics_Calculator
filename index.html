@@ -65,8 +65,6 @@
         <button id="backButton" onclick="goBack()">Back</button>
     </div>
 
-
-
     <script>
         // Variable to store entered data
         var formData = {};
@@ -165,7 +163,7 @@
                 select.appendChild(placeholderOption);
 
                 // Add other options
-                for (var j = 1; j <= 6; j++) {
+                for (var j = 1; j <= 8; j++) {
                     var option = document.createElement("option");
                     option.value = j;
                     option.textContent = j;
@@ -184,7 +182,6 @@
                 semesterDropdowns.appendChild(document.createElement("br"));
             }
         }
-
 
         function generateMarkAndCreditInputs(selectId) {
             var semesterNumber = selectId.replace("semester", "");
@@ -230,6 +227,7 @@
 
             var totalValue = 0;
             var totalCredits = 0;
+            var totalGradePoints = 0;
 
             for (var i = 1; i <= 5; i++) { // Iterate up to semester 5
                 var semester = document.getElementById("semester" + i).value;
@@ -237,8 +235,10 @@
                     for (var j = 1; j <= semester; j++) {
                         var mark = parseInt(document.getElementById("semester" + i + "mark" + j).value);
                         var credit = parseInt(document.getElementById("semester" + i + "credit" + j).value);
+                        var gradePoint = calculateGradePoint(mark);
                         totalValue += mark * credit;
                         totalCredits += credit;
+                        totalGradePoints += gradePoint * credit;
                     }
                 } else {
                     alert("Please select the number of papers for Semester " + i);
@@ -252,20 +252,45 @@
                 for (var j = 1; j <= semester6; j++) {
                     var mark = parseInt(document.getElementById("semester6mark" + j).value);
                     var credit = parseInt(document.getElementById("semester6credit" + j).value);
+                    var gradePoint = calculateGradePoint(mark);
                     totalValue += mark * credit;
                     totalCredits += credit;
+                    totalGradePoints += gradePoint * credit;
                 }
             }
 
             var percentage = (totalValue / totalCredits).toFixed(2);
+            var cgpa = (totalGradePoints / totalCredits).toFixed(2);
+
             resultContent += "<p><strong>Percentage:</strong> " + percentage + "%</p>";
+            resultContent += "<p><strong>CGPA:</strong> " + cgpa + "</p>";
 
             // Get name from the form
             var name = formData.get("name");
 
-            // Construct congratulations message
-            congratulationsMessage += "<p>Congratulations " + name + ", you scored overall " + percentage + "% in your college academic. All the Best for your Future.</p>";
+            // Array containing the quotes
+            var quotes = [
+                "Discipline is the compass; education is the journey.",
+                "In the symphony of life, discipline conducts; education harmonizes.",
+                "Education ignites the mind; discipline steers the soul.",
+                "Discipline shapes character; education enriches minds.",
+                "Education without discipline is like a ship without a rudder.",
+                "Discipline paves the path; education lights the way.",
+                "In the garden of knowledge, discipline is the gardener; education blooms the flowers.",
+                "Discipline molds greatness; education unveils potential.",
+                "Education is the vessel; discipline is the wind in its sails.",
+                "Discipline fuels the fire of learning; education fuels the flame of wisdom."
+            ];
 
+            // Generate a random index
+            var randomIndex = Math.floor(Math.random() * quotes.length);
+            // Get the quote at the random index
+            var randomQuote = quotes[randomIndex];
+
+            // Construct congratulations message
+
+            congratulationsMessage += "<p>Congratulations " + name + ", you scored overall " + percentage + "% in your college academic. All the Best for your Future.</p>";
+            congratulationsMessage += '<p>"' + randomQuote + '"</p>';
             document.getElementById("page2").style.display = "none";
             document.getElementById("result").style.display = "block";
             document.getElementById("resultContent").innerHTML = resultContent;
@@ -274,6 +299,24 @@
             // Display credits
             document.getElementById("credits").style.display = "block";
             document.getElementById("credits-Mahashri").style.display = "block";
+        }
+
+        function calculateGradePoint(mark) {
+            if (mark >= 90 && mark <= 100) {
+                return 10;
+            } else if (mark >= 80 && mark <= 89) {
+                return 9;
+            } else if (mark >= 70 && mark <= 79) {
+                return 8;
+            } else if (mark >= 60 && mark <= 69) {
+                return 7;
+            } else if (mark >= 50 && mark <= 59) {
+                return 6;
+            } else if (mark >= 40 && mark <= 49) {
+                return 5;
+            } else {
+                return 0; // For marks below 40, grade point is 0
+            }
         }
     </script>
 </body>

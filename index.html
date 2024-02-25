@@ -201,6 +201,8 @@
                     markInput.id = "semester" + semesterNumber + "mark" + i;
                     markInput.name = "semester" + semesterNumber + "mark" + i;
                     markInput.required = true;
+                    markInput.min = "0";
+                    markInput.max = "100"; // Set maximum mark as 100
                     inputDiv.appendChild(markInput);
 
                     var creditLabel = document.createElement("label");
@@ -213,12 +215,15 @@
                     creditInput.id = "semester" + semesterNumber + "credit" + i;
                     creditInput.name = "semester" + semesterNumber + "credit" + i;
                     creditInput.required = true;
+                    creditInput.min = "1";
+                    creditInput.max = "10"; // Set maximum credit as 10
                     inputDiv.appendChild(creditInput);
 
                     inputDiv.appendChild(document.createElement("br"));
                 }
             }
         }
+
 
         function submitForm() {
             var formData = new FormData(document.getElementById("studentInfoForm"));
@@ -229,7 +234,7 @@
             var totalCredits = 0;
             var totalGradePoints = 0;
 
-            for (var i = 1; i <= 5; i++) { // Iterate up to semester 5
+            for (var i = 1; i <= 3; i++) { // Iterate up to semester 3
                 var semester = document.getElementById("semester" + i).value;
                 if (semester != 0) {
                     for (var j = 1; j <= semester; j++) {
@@ -246,16 +251,18 @@
                 }
             }
 
-            // Check if semester 6 is selected
-            var semester6 = document.getElementById("semester6").value;
-            if (semester6 != 0) {
-                for (var j = 1; j <= semester6; j++) {
-                    var mark = parseInt(document.getElementById("semester6mark" + j).value);
-                    var credit = parseInt(document.getElementById("semester6credit" + j).value);
-                    var gradePoint = calculateGradePoint(mark);
-                    totalValue += mark * credit;
-                    totalCredits += credit;
-                    totalGradePoints += gradePoint * credit;
+            // Iterate from semester 4 to 6, but only if they are selected by the user
+            for (var i = 4; i <= 6; i++) {
+                var semester = document.getElementById("semester" + i).value;
+                if (semester != 0) {
+                    for (var j = 1; j <= semester; j++) {
+                        var mark = parseInt(document.getElementById("semester" + i + "mark" + j).value);
+                        var credit = parseInt(document.getElementById("semester" + i + "credit" + j).value);
+                        var gradePoint = calculateGradePoint(mark);
+                        totalValue += mark * credit;
+                        totalCredits += credit;
+                        totalGradePoints += gradePoint * credit;
+                    }
                 }
             }
 
@@ -270,16 +277,16 @@
 
             // Array containing the quotes
             var quotes = [
-                "Discipline is the compass; education is the journey.",
-                "In the symphony of life, discipline conducts; education harmonizes.",
-                "Education ignites the mind; discipline steers the soul.",
-                "Discipline shapes character; education enriches minds.",
+                "Discipline is the compass; ducation is the journey.",
+                "In the symphony of life, Discipline conducts; Education harmonizes.",
+                "Education ignites the mind; Discipline steers the soul.",
+                "Discipline shapes character; Education enriches minds.",
                 "Education without discipline is like a ship without a rudder.",
-                "Discipline paves the path; education lights the way.",
-                "In the garden of knowledge, discipline is the gardener; education blooms the flowers.",
-                "Discipline molds greatness; education unveils potential.",
-                "Education is the vessel; discipline is the wind in its sails.",
-                "Discipline fuels the fire of learning; education fuels the flame of wisdom."
+                "Discipline paves the path; Education lights the way.",
+                "In the garden of knowledge, Discipline is the gardener; education blooms the flowers.",
+                "Discipline molds greatness;Education unveils potential.",
+                "Education is the vessel; Discipline is the wind in its sails.",
+                "Discipline fuels the fire of learning; Education fuels the flame of wisdom."
             ];
 
             // Generate a random index

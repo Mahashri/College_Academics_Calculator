@@ -234,7 +234,7 @@
             var totalCredits = 0;
             var totalGradePoints = 0;
 
-            for (var i = 1; i <= 3; i++) { // Iterate up to semester 3
+            for (var i = 1; i <= 2; i++) { // Iterate up to semester 2
                 var semester = document.getElementById("semester" + i).value;
                 if (semester != 0) {
                     for (var j = 1; j <= semester; j++) {
@@ -251,8 +251,8 @@
                 }
             }
 
-            // Iterate from semester 4 to 6, but only if they are selected by the user
-            for (var i = 4; i <= 6; i++) {
+            // Iterate from semester 3 to 6, but only if they are selected by the user
+            for (var i = 3; i <= 6; i++) {
                 var semester = document.getElementById("semester" + i).value;
                 if (semester != 0) {
                     for (var j = 1; j <= semester; j++) {

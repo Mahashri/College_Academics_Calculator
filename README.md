@@ -34,3 +34,10 @@ Do not use the current file-writing approach for real student records without ad
 
 ## Project status
 Learning project; not production-ready for personal or educational records without the safeguards above.
+
+
+---
+
+## Live Demo
+
+[Open the deployed application](https://mahashri.github.io/College_Academics_Calculator/)
